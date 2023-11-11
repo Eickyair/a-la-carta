@@ -1,5 +1,5 @@
 services:
-  postgres:
+  postgres_db:
     container_name: base-datos_a-la-carta
     image: postgres:15
     environment:
@@ -20,11 +20,15 @@ services:
       - "5050:80"
     restart: always
     depends_on:
-      - postgres
-  web_app:
-      container_name: next_wep_app
-      build: .
-      ports:
+      - postgres_db
+
+  web_app_env_dev:
+    container_name: web_app_dev
+    build: .
+    ports:
       - "3000:3000"
-      depends_on:
-      - postgres
+    command: yarn dev
+    volumes:
+      - .:/web_app
+    depends_on:
+      - postgres_db
