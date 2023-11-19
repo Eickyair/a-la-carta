@@ -224,7 +224,7 @@ VALUES (
         11,
         'Gurley',
         'Yong',
-        'jyonga@plala.or.jp',
+        'empleado@test.com',
         'test',
         'Bartillon',
         '01036',

@@ -1,1 +1,1 @@
-export { default as InputTextValidation } from './InputTextValidation';
+export * from './InputTextValidation';
