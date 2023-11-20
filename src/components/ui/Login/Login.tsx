@@ -5,17 +5,30 @@ import { FC } from "react";
 import { InputTextWithValidation } from "../InputTextValidation";
 import { Button } from "primereact/button";
 import Link from "next/link";
-import {signIn}from "next-auth/react"
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 export const Login: FC = () => {
+  const router = useRouter()
   const loginData = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
     validate: toFormikValidate(schemaValidationLoginData),
-    onSubmit({email,password}) {
-      console.log("🚀 ~ file: Login.tsx:17 ~ onSubmit ~ {email,password}:", {email,password})
-      signIn('credentials',{redirect:false,password,email})
+    onSubmit({ email, password }) {
+      console.log("🚀 ~ file: Login.tsx:17 ~ onSubmit ~ {email,password}:", {
+        email,
+        password,
+      });
+      signIn("credentials", { redirect: false, password, email }).then((value) => {
+        if(!value) return
+        const {error,ok,status,url} = value
+        //Todo mostrar un error de que no se pudo log
+        if(ok && status===200){
+          router.push('/menu')
+        }
+        return console.error(error)
+      });
     },
   });
   const { email, password } = loginData.values;
@@ -23,7 +36,10 @@ export const Login: FC = () => {
   const { email: emailError, password: passwordError } = loginData.errors;
   const { handleBlur, handleChange } = loginData;
   return (
-    <form className="flex flex-col justify-center items-center h-screen gap-4" onSubmit={loginData.handleSubmit}>
+    <form
+      className="flex flex-col justify-center items-center h-screen gap-4"
+      onSubmit={loginData.handleSubmit}
+    >
       <div className="flex flex-col gap-5 w-[600px] text-center p-3 shadow-2xl rounded-2xl">
         <h3 className="text-4xl">A La Carta</h3>
         <hr />
@@ -63,7 +79,9 @@ export const Login: FC = () => {
         </div>
       </div>
       <div className="w-[580px] flex justify-end">
-        <Link href={"/registro"} className="text-sm text-blue-600 underline">Registrarse</Link>
+        <Link href={"/registro"} className="text-sm text-blue-600 underline">
+          Registrarse
+        </Link>
       </div>
     </form>
   );

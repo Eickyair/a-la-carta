@@ -1,4 +1,4 @@
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, User } from "next-auth";
 import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { prisma } from "@/server/prisma";
@@ -37,7 +37,7 @@ export const authOptions: NextAuthOptions = {
           cliente
         );
         if (cliente) {
-          return { id:cliente.cliente_id,nombre:cliente.nombre};
+          return { id:cliente.cliente_id,nombre:cliente.nombre,tipo:"cliente"};
         }
         const empleado = await prisma.empleado.findUnique({
           select: { numero_empleado_id: true, nombre: true },
@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
           empleado
         );
         if (empleado) {
-          return { id:empleado.numero_empleado_id,nombre:empleado.nombre };
+          return { id:empleado.numero_empleado_id,nombre:empleado.nombre,tipo:"empleado" };
         }
         return null;
       },
@@ -56,9 +56,17 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     jwt({ token, user, trigger }) {
+      if(user){
+        return {...token,...user}
+      }
       return token;
     },
     session({ session, token }) {
+      session.user = {
+        id:token.id,
+        tipo:token.tipo,
+        nombre:token.nombre
+      } as User
       return session;
     },
   },
