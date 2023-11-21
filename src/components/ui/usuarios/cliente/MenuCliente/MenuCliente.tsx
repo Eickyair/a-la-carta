@@ -3,7 +3,6 @@ import { ListaDeAlimentos } from "../ListaDeAlimentos";
 import { trpc } from "@/utils/trpc";
 import { useSession } from "next-auth/react";
 import { OrdenDeCompraCliente } from "../OrdenDeCompraCliente";
-import { OrdenContextProvider } from "@/context/OrdenContext";
 export const MenuCliente: FC = () => {
   const { data: session } = useSession();
   const { data: ordenEnCursoRes } =
@@ -17,10 +16,8 @@ export const MenuCliente: FC = () => {
         ordenEnCursoRes?.ordenActual?.orden_general_id ? "justify-between" : ""
       }`}
     >
-      <OrdenContextProvider>
         <ListaDeAlimentos />
         <OrdenDeCompraCliente />
-      </OrdenContextProvider>
     </div>
   );
 };

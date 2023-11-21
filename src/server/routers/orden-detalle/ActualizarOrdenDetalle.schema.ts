@@ -7,7 +7,6 @@ export const ActualizarOrdenDetalle = z.object({
       alimento_id: z.number().nonnegative(),
       cantidad: z.number().int().nonnegative(),
       subtotal: z.number().nonnegative(),
-      nombre: z.string(),
       nuevo: z.boolean().default(false),
     })
   ),

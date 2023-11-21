@@ -22,7 +22,7 @@ Verificar-ExitCode "docker-compose down" $LASTEXITCODE
 
 docker-compose up -d
 Verificar-ExitCode "docker-compose up -d" $LASTEXITCODE
-
+Start-Sleep 5
 if ($prisma) {
     Write-Host "Levantando la base de datos..."
     Start-Sleep -Seconds 3

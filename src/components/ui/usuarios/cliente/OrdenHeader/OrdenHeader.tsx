@@ -19,7 +19,7 @@ export const OrdenHeader: FC<OrdenHeaderProps> = ({
           <Tag severity={"info"}>{folio}</Tag>
           <Tag>{estatus}</Tag>
         </p>
-        <p className="text-2xl font-nunito">{total}$</p>
+        <p className="text-2xl font-nunito">Total:{total}$</p>
       </div>
     </div>
   );
