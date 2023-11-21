@@ -7,12 +7,22 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    fontFamily:{
+      poppins:["Poppins"],
+      roboto:["Roboto"],
+      nunito:["Nunito"]
+    },
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
+    },
+    colors:{
+      naranja:"#FFB454",
+      negroFond:"#12151C",
+      blanco:"#F3F4F5"
     },
   },
   plugins: [],

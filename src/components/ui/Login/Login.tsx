@@ -16,18 +16,10 @@ export const Login: FC = () => {
     },
     validate: toFormikValidate(schemaValidationLoginData),
     onSubmit({ email, password }) {
-      console.log("🚀 ~ file: Login.tsx:17 ~ onSubmit ~ {email,password}:", {
-        email,
-        password,
-      });
       signIn("credentials", { redirect: false, password, email }).then((value) => {
         if(!value) return
         const {error,ok,status,url} = value
         //Todo mostrar un error de que no se pudo log
-        if(ok && status===200){
-          router.push('/menu')
-        }
-        return console.error(error)
       });
     },
   });

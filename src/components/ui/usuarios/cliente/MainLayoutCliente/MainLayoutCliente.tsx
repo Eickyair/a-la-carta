@@ -7,6 +7,7 @@ export const MainLayoutCliente:FC<MainLayoutClienteProps> = ({children}) => {
   return (
     <div>
       <NavbarCliente/>
+      {children}
     </div>
   )
 }

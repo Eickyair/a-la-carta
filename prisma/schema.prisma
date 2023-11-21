@@ -104,9 +104,9 @@ model orden_general {
   orden_general_id   Int             @id(map: "orden_general_pk") @default(autoincrement())
   estatus            String          @default("REGISTRADA") @db.VarChar(40)
   genero_factura     Boolean         @default(false)
-  folio              String          @db.VarChar(40)
-  fecha              DateTime        @db.Date
-  total              Decimal?        @db.Decimal(15, 0)
+  folio              String?         @db.VarChar(40)
+  fecha              DateTime        @default(now()) @db.Timestamp(6)
+  total              Decimal         @db.Decimal(15, 2)
   cliente_id         Int             @default(autoincrement())
   numero_empleado_id Int             @default(autoincrement())
   orden_detalle      orden_detalle[]
@@ -140,7 +140,7 @@ model orden_detalle {
   orden_general_id Int           @default(autoincrement())
   alimento_id      Int           @default(autoincrement())
   cantidad         Decimal       @db.Decimal(3, 0)
-  subtotal         Decimal       @default(0) @db.Decimal(12, 2)
+  subtotal         Decimal       @db.Decimal(12, 2)
   alimento         alimento      @relation(fields: [alimento_id], references: [alimento_id], onDelete: NoAction, onUpdate: NoAction, map: "orden_detalle_alimento_id")
   orden_general    orden_general @relation(fields: [orden_general_id], references: [orden_general_id], onDelete: NoAction, onUpdate: NoAction, map: "orden_detalle_orden_general_id")
 

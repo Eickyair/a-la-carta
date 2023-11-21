@@ -32,23 +32,24 @@ export const authOptions: NextAuthOptions = {
           },
           where: { email },
         });
-        console.log(
-          "🚀 ~ file: [...nextauth].ts:29 ~ authorize ~ cliente:",
-          cliente
-        );
+
         if (cliente) {
-          return { id:cliente.cliente_id,nombre:cliente.nombre,tipo:"cliente"};
+          return {
+            id: cliente.cliente_id,
+            nombre: cliente.nombre,
+            tipo: "cliente",
+          };
         }
         const empleado = await prisma.empleado.findUnique({
           select: { numero_empleado_id: true, nombre: true },
           where: { email },
         });
-        console.log(
-          "🚀 ~ file: [...nextauth].ts:34 ~ authorize ~ empleado:",
-          empleado
-        );
         if (empleado) {
-          return { id:empleado.numero_empleado_id,nombre:empleado.nombre,tipo:"empleado" };
+          return {
+            id: empleado.numero_empleado_id,
+            nombre: empleado.nombre,
+            tipo: "empleado",
+          };
         }
         return null;
       },
@@ -56,17 +57,17 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     jwt({ token, user, trigger }) {
-      if(user){
-        return {...token,...user}
+      if (user) {
+        return { ...token, ...user };
       }
       return token;
     },
     session({ session, token }) {
       session.user = {
-        id:token.id,
-        tipo:token.tipo,
-        nombre:token.nombre
-      } as User
+        id: token.id,
+        tipo: token.tipo,
+        nombre: token.nombre,
+      } as User;
       return session;
     },
   },
